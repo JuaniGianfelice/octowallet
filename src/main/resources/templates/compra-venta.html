@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OctoWallet - Compra / Venta</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+<main>
+    <!-- RF03: dos selectores (moneda a vender y moneda a comprar) -->
+    <h1>Compra / Venta</h1>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+    <form class="tarjeta" th:action="@{/compra-venta/cotizar}" method="post">
+        <label>Moneda a vender
+            <select name="origen">
+                <option th:each="a : ${activos}" th:value="${a}" th:text="${a}"></option>
+            </select>
+        </label>
+        <label>Monto a vender
+            <input type="number" name="monto" step="0.00000001" min="0.00000001" required>
+        </label>
+        <label>Moneda a comprar
+            <select name="destino">
+                <option th:each="a : ${activos}" th:value="${a}" th:text="${a}"></option>
+            </select>
+        </label>
+        <button type="submit">Ver resumen</button>
+    </form>
+</main>
+</body>
+</html>

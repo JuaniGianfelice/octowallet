@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OctoWallet - Transferencias</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+<main>
+    <!-- RF05: formulario alias + cuenta (activo) + importe + confirmar -->
+    <h1>Transferir</h1>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+    <form class="tarjeta" th:action="@{/transferencia}" method="post">
+        <label>Alias del destinatario <input type="text" name="alias" required></label>
+        <label>Cuenta
+            <select name="activo">
+                <option th:each="a : ${activos}" th:value="${a}" th:text="${a}"></option>
+            </select>
+        </label>
+        <label>Importe <input type="number" name="monto" step="0.00000001" min="0.00000001" required></label>
+        <button type="submit">Confirmar</button>
+    </form>
+</main>
+</body>
+</html>

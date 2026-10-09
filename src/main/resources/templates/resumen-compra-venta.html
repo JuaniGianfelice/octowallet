@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OctoWallet - Resumen</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+<main>
+    <!-- RF04: resumen previo con la cotización congelada por 5 minutos -->
+    <h1>Resumen de la operación</h1>
+    <p class="aviso" th:if="${aviso}" th:text="${aviso}"></p>
+    <div class="tarjeta">
+        <p>Vendés:
+            <strong th:text="${#numbers.formatDecimal(cotizacion.montoOrigen(), 1, 'POINT', 8, 'COMMA')} + ' ' + ${cotizacion.origen()}"></strong></p>
+        <p>Recibís:
+            <strong th:text="${#numbers.formatDecimal(cotizacion.montoDestino(), 1, 'POINT', 8, 'COMMA')} + ' ' + ${cotizacion.destino()}"></strong></p>
+        <p>Cotización usada:
+            1 <span th:text="${cotizacion.origen()}"></span> = $ <span th:text="${#numbers.formatDecimal(cotizacion.precioOrigen(), 1, 'POINT', 2, 'COMMA')}"></span> ARS ·
+            1 <span th:text="${cotizacion.destino()}"></span> = $ <span th:text="${#numbers.formatDecimal(cotizacion.precioDestino(), 1, 'POINT', 2, 'COMMA')}"></span> ARS</p>
+        <p>Precio congelado hasta las <strong th:text="${venceA}"></strong>.</p>
+        <div class="acciones">
+            <form th:action="@{/compra-venta/confirmar}" method="post">
+                <button type="submit">Confirmar</button>
+            </form>
+            <form th:action="@{/compra-venta/cancelar}" method="post">
+                <button type="submit" class="secundario">Cancelar</button>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

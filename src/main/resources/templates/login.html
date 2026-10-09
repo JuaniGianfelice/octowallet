@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OctoWallet - Ingresar</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body class="centrado">
+<!-- RF01: login simple con usuario y contraseña -->
+<div class="tarjeta chica">
+    <div class="logo">🐙 OctoWallet</div>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+    <p class="ok" th:if="${ok}" th:text="${ok}"></p>
+    <form th:action="@{/login}" method="post">
+        <label>Usuario <input type="text" name="username" required></label>
+        <label>Contraseña <input type="password" name="password" required></label>
+        <button type="submit">Ingresar</button>
+    </form>
+    <p>¿No tenés cuenta? <a th:href="@{/registro}">Registrate</a></p>
+</div>
+</body>
+</html>

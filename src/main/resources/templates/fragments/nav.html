@@ -1,0 +1,13 @@
+<!-- Barra lateral compartida por todas las pantallas internas (navegación consistente, RNF Usabilidad).
+     Se incluye en cada página con th:replace="~{fragments/nav :: nav}". -->
+<nav th:fragment="nav" class="nav">
+    <div class="logo">🐙 OctoWallet</div>
+    <a th:href="@{/menu}">Menú principal</a>
+    <a th:href="@{/compra-venta}">Compra / Venta</a>
+    <a th:href="@{/transferencia}">Transferencias</a>
+    <a th:href="@{/historial}">Historial</a>
+    <a th:href="@{/historicos}">Históricos</a>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="link">Cerrar sesión</button>
+    </form>
+</nav>

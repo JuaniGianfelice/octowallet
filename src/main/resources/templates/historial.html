@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OctoWallet - Historial</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+<main>
+    <!-- RF07: movimientos en orden cronológico (más nuevos primero) -->
+    <h1>Historial</h1>
+    <p th:if="${#lists.isEmpty(movimientos)}">Todavía no hay movimientos.</p>
+    <table th:unless="${#lists.isEmpty(movimientos)}">
+        <thead>
+        <tr><th>Fecha</th><th>Tipo</th><th>Detalle</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="m : ${movimientos}">
+            <td th:text="${#temporals.format(m.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+            <!-- th:switch elige qué texto mostrar según el tipo de movimiento -->
+            <td th:switch="${m.tipo.name()}">
+                <span th:case="'COMPRA_VENTA'">Compra / Venta</span>
+                <span th:case="'TRANSFERENCIA_ENVIADA'">Transferencia enviada</span>
+                <span th:case="'TRANSFERENCIA_RECIBIDA'">Transferencia recibida</span>
+            </td>
+            <td th:switch="${m.tipo.name()}">
+                <span th:case="'COMPRA_VENTA'"
+                      th:text="${#numbers.formatDecimal(m.montoOrigen, 1, 'POINT', 8, 'COMMA')} + ' ' + ${m.activoOrigen} + ' → ' + ${#numbers.formatDecimal(m.montoDestino, 1, 'POINT', 8, 'COMMA')} + ' ' + ${m.activoDestino}"></span>
+                <span th:case="'TRANSFERENCIA_ENVIADA'"
+                      th:text="'-' + ${#numbers.formatDecimal(m.montoOrigen, 1, 'POINT', 8, 'COMMA')} + ' ' + ${m.activoOrigen} + ' a ' + ${m.aliasContraparte}"></span>
+                <span th:case="'TRANSFERENCIA_RECIBIDA'"
+                      th:text="'+' + ${#numbers.formatDecimal(m.montoOrigen, 1, 'POINT', 8, 'COMMA')} + ' ' + ${m.activoOrigen} + ' de ' + ${m.aliasContraparte}"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OctoWallet - Históricos</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <!-- Chart.js: librería open source (MIT) para dibujar el gráfico -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+<main>
+    <!-- RF08: selector de activo y de rango + gráfico de precios en ARS -->
+    <h1>Históricos</h1>
+    <form class="tarjeta fila" th:action="@{/historicos}" method="get">
+        <label>Activo
+            <select name="activo">
+                <option th:each="a : ${criptos}" th:value="${a}" th:text="${a}" th:selected="${a == activo}"></option>
+            </select>
+        </label>
+        <label>Rango
+            <select name="rango">
+                <option value="dia" th:selected="${rango == 'dia'}">Día actual</option>
+                <option value="semana" th:selected="${rango == 'semana'}">Última semana</option>
+                <option value="mes" th:selected="${rango == 'mes'}">Último mes</option>
+                <option value="anio" th:selected="${rango == 'anio'}">Último año</option>
+                <option value="inicio" th:selected="${rango == 'inicio'}">Desde el inicio</option>
+            </select>
+        </label>
+        <button type="submit">Ver</button>
+    </form>
+
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+    <div class="tarjeta" th:if="${valores}">
+        <canvas id="grafico"></canvas>
+    </div>
+</main>
+
+<!-- th:inline="javascript" pasa las listas de Java a variables de JavaScript -->
+<script th:if="${valores}" th:inline="javascript">
+    const etiquetas = /*[[${etiquetas}]]*/ [];
+    const valores = /*[[${valores}]]*/ [];
+    const activo = /*[[${activo.name()}]]*/ '';
+
+    new Chart(document.getElementById('grafico'), {
+        type: 'line',
+        data: {
+            labels: etiquetas,
+            datasets: [{
+                label: activo + ' en ARS',
+                data: valores,
+                borderColor: '#7c3aed',
+                pointRadius: 0,
+                tension: 0.2
+            }]
+        }
+    });
+</script>
+</body>
+</html>

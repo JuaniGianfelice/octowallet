@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OctoWallet - Menú</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+<main>
+    <!-- RF02: menú principal con dinero disponible en ARS y en cada cripto -->
+    <h1 th:text="'Hola, ' + ${usuario.username}"></h1>
+    <p>Tu alias: <strong th:text="${usuario.alias}"></strong></p>
+
+    <p class="ok" th:if="${ok}" th:text="${ok}"></p>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+
+    <div class="tarjeta" th:if="${total != null}">
+        <span>Patrimonio total</span>
+        <h2 th:text="'$ ' + ${#numbers.formatDecimal(total, 1, 'POINT', 2, 'COMMA')} + ' ARS'"></h2>
+    </div>
+
+    <table>
+        <thead>
+        <tr><th>Activo</th><th>Saldo</th><th>Valor en ARS</th></tr>
+        </thead>
+        <tbody>
+        <!-- Los records se leen con método: f.activo(), f.saldo() -->
+        <tr th:each="f : ${filas}">
+            <td th:text="${f.activo()}"></td>
+            <td th:text="${#numbers.formatDecimal(f.saldo(), 1, 'POINT', f.activo().name() == 'ARS' ? 2 : 8, 'COMMA')}"></td>
+            <td th:text="${f.valorArs() != null} ? '$ ' + ${#numbers.formatDecimal(f.valorArs(), 1, 'POINT', 2, 'COMMA')} : '-'"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="acciones">
+        <a class="boton" th:href="@{/compra-venta}">Compra / Venta</a>
+        <a class="boton" th:href="@{/transferencia}">Transferir</a>
+        <a class="boton" th:href="@{/historial}">Historial</a>
+        <a class="boton" th:href="@{/historicos}">Históricos</a>
+    </div>
+</main>
+</body>
+</html>

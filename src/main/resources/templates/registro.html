@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OctoWallet - Registro</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body class="centrado">
+<!-- Alta de usuario: necesaria para que existan usuarios con los que loguearse y transferir. -->
+<div class="tarjeta chica">
+    <div class="logo">🐙 OctoWallet</div>
+    <h2>Crear cuenta</h2>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+    <form th:action="@{/registro}" method="post">
+        <label>Usuario <input type="text" name="username" required></label>
+        <label>Contraseña <input type="password" name="password" required></label>
+        <label>Alias (para recibir transferencias) <input type="text" name="alias" required></label>
+        <button type="submit">Registrarme</button>
+    </form>
+    <p><a th:href="@{/login}">Volver al login</a></p>
+</div>
+</body>
+</html>
