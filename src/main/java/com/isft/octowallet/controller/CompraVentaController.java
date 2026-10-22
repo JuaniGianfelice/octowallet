@@ -23,10 +23,6 @@ import com.isft.octowallet.service.UsuarioService;
 
 import jakarta.servlet.http.HttpSession;
 
-/**
- * Flujo de compra/venta (RF03 y RF04):
- * 1) formulario -> 2) /cotizar congela precios y muestra resumen -> 3) /confirmar o /cancelar.
- */
 @Controller
 public class CompraVentaController {
 
@@ -72,7 +68,7 @@ public class CompraVentaController {
         }
         Usuario usuario = usuarioService.buscarPorId(usuarioId);
         try {
-            // RF04: si pasaron los 5 minutos, se recalcula con precios nuevos y se vuelve a mostrar el resumen.
+            //Si pasaron los 5 minutos, se recalcula con precios nuevos y se vuelve a mostrar el resumen.
             if (cotizacion.vencida()) {
                 Cotizacion nueva = compraVentaService.cotizar(usuario,
                         cotizacion.origen(), cotizacion.destino(), cotizacion.montoOrigen());
@@ -93,7 +89,7 @@ public class CompraVentaController {
         }
     }
 
-    // RF04: si el usuario no confirma, vuelve al menú principal.
+    //Si el usuario no confirma, vuelve al menú principal.
     @PostMapping("/compra-venta/cancelar")
     public String cancelar(HttpSession session) {
         session.removeAttribute(COTIZACION_SESION);

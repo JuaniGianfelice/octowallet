@@ -19,11 +19,10 @@ import com.isft.octowallet.service.OperacionException;
 import com.isft.octowallet.service.PrecioService;
 import com.isft.octowallet.service.UsuarioService;
 
-/** Menú principal con saldos y patrimonio total (RF02). */
 @Controller
 public class MenuController {
 
-    /** Una fila de la tabla de saldos. valorArs queda null si CoinGecko no respondió. */
+    //Una fila de la tabla de saldos. valorArs queda null si CoinGecko no respondio
     public record FilaSaldo(Activo activo, BigDecimal saldo, BigDecimal valorArs) {}
 
     private final UsuarioService usuarioService;
@@ -48,7 +47,6 @@ public class MenuController {
         Usuario usuario = usuarioService.buscarPorId(usuarioId);
         List<Cuenta> cuentas = cuentaRepository.findByUsuarioOrderByActivo(usuario);
 
-        // Si CoinGecko falla, igual se muestran los saldos; solo falta la valuación en ARS.
         Map<Activo, BigDecimal> precios = null;
         try {
             precios = precioService.preciosEnArs();

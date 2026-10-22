@@ -15,7 +15,6 @@ import com.isft.octowallet.model.Usuario;
 import com.isft.octowallet.repository.CuentaRepository;
 import com.isft.octowallet.repository.MovimientoRepository;
 
-/** Compra y venta de activos (RF03 y RF04). */
 @Service
 public class CompraVentaService {
 
@@ -30,11 +29,7 @@ public class CompraVentaService {
         this.movimientoRepository = movimientoRepository;
     }
 
-    /**
-     * Calcula cuánto recibe el usuario y congela los precios en ese momento.
-     * Conversión: monto * precio(origen en ARS) / precio(destino en ARS).
-     * Ej: vendo 0.01 BTC (a 100.000.000 ARS) por ETH (a 4.000.000 ARS) -> 0.01 * 100M / 4M = 0.25 ETH.
-     */
+
     public Cotizacion cotizar(Usuario usuario, Activo origen, Activo destino, BigDecimal monto) {
         if (origen == destino) {
             throw new OperacionException("Elegí dos activos distintos.");
@@ -53,11 +48,7 @@ public class CompraVentaService {
         return new Cotizacion(origen, destino, monto, precioOrigen, precioDestino, montoDestino, Instant.now());
     }
 
-    /**
-     * Ejecuta la operación con los valores congelados.
-     * @Transactional: se descuenta, se acredita y se registra el movimiento juntos;
-     * si algo falla, no se guarda nada (RNF: no perder transacciones).
-     */
+
     @Transactional
     public void confirmar(Usuario usuario, Cotizacion cotizacion) {
         Cuenta cuentaOrigen = buscarCuenta(usuario, cotizacion.origen());

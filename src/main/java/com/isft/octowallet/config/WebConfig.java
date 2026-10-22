@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/** Registra el LoginInterceptor en todas las rutas menos las públicas. */
+// Registra el LoginInterceptor en todas las rutas menos las públicas
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 

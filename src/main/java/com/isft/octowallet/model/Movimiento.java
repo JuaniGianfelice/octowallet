@@ -13,12 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-/**
- * Registro de cada operación para el historial (RF07).
- * Una sola tabla para los tres tipos:
- *  - COMPRA_VENTA: usa origen y destino (vendí X de A, recibí Y de B).
- *  - TRANSFERENCIA_ENVIADA / RECIBIDA: usa solo origen (activo y monto) + alias de la otra persona.
- */
+
 @Entity
 public class Movimiento {
 
@@ -26,7 +21,6 @@ public class Movimiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Dueño del movimiento: es en el historial de quién aparece.
     @ManyToOne(optional = false)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;

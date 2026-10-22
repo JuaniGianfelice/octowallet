@@ -13,7 +13,6 @@ import com.isft.octowallet.service.UsuarioService;
 
 import jakarta.servlet.http.HttpSession;
 
-/** Login, registro y logout (RF01). */
 @Controller
 public class AuthController {
 
@@ -25,7 +24,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String loginForm() {
-        return "login"; // templates/login.html
+        return "login";
     }
 
     @PostMapping("/login")

@@ -16,7 +16,6 @@ import com.isft.octowallet.service.OperacionException;
 import com.isft.octowallet.service.TransferenciaService;
 import com.isft.octowallet.service.UsuarioService;
 
-/** Formulario de transferencia por alias (RF05 y RF06). */
 @Controller
 public class TransferenciaController {
 
@@ -43,7 +42,7 @@ public class TransferenciaController {
             redirect.addFlashAttribute("ok", "Transferencia enviada a " + alias + ".");
             return "redirect:/menu";
         } catch (OperacionException e) {
-            // RF06: si falla, se cancela y se muestra el motivo.
+            // Si falla, se cancela y se muestra el motivo.
             model.addAttribute("error", e.getMessage());
             model.addAttribute("activos", Activo.values());
             return "transferencia";

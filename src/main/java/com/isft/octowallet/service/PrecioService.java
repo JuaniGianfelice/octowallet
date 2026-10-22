@@ -13,10 +13,7 @@ import org.springframework.web.client.RestClientException;
 
 import com.isft.octowallet.model.Activo;
 
-/**
- * Conexión con la API de CoinGecko (RF03 y RF08).
- * Todos los precios se piden en ARS, así se puede convertir cualquier activo a cualquier otro.
- */
+
 @Service
 public class PrecioService {
 

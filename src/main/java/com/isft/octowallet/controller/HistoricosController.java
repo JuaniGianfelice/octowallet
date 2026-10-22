@@ -17,11 +17,10 @@ import com.isft.octowallet.model.Activo;
 import com.isft.octowallet.service.OperacionException;
 import com.isft.octowallet.service.PrecioService;
 
-/** Gráfico de históricos por activo y rango de fechas (RF08). */
 @Controller
 public class HistoricosController {
 
-    // Rango elegido en pantalla -> valor del parámetro "days" de CoinGecko.
+    // Valor del parámetro "days" de CoinGecko.
     private static final Map<String, String> RANGOS = Map.of(
             "dia", "1",
             "semana", "7",
@@ -38,7 +37,6 @@ public class HistoricosController {
     @GetMapping("/historicos")
     public String historicos(@RequestParam(defaultValue = "BTC") Activo activo,
                              @RequestParam(defaultValue = "semana") String rango, Model model) {
-        // Solo las cripto tienen histórico (ARS contra ARS siempre vale 1).
         List<Activo> criptos = new ArrayList<>();
         for (Activo a : Activo.values()) {
             if (a.esCripto()) criptos.add(a);
@@ -53,7 +51,7 @@ public class HistoricosController {
         }
 
         try {
-            // En el rango "día" se muestra la hora; en el resto, la fecha.
+            // En el rango "día" se muestra la hora - en el resto, la fecha.
             DateTimeFormatter formato = DateTimeFormatter.ofPattern(rango.equals("dia") ? "HH:mm" : "dd/MM/yyyy");
             List<String> etiquetas = new ArrayList<>();
             List<Double> valores = new ArrayList<>();

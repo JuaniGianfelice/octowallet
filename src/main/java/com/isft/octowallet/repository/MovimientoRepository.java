@@ -9,6 +9,5 @@ import com.isft.octowallet.model.Usuario;
 
 public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
 
-    // Historial ordenado del más nuevo al más viejo (RF07: orden cronológico).
     List<Movimiento> findByUsuarioOrderByFechaDesc(Usuario usuario);
 }

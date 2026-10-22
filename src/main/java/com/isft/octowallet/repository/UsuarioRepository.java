@@ -6,10 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.isft.octowallet.model.Usuario;
 
-/**
- * Spring Data genera la implementación sola: solo con el nombre del método
- * (findByUsername) arma la consulta SQL "WHERE username = ?".
- */
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByUsername(String username);

@@ -14,11 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
-/**
- * Cuenta de un usuario para UN activo, con su saldo.
- * Cada usuario tiene una cuenta por activo (ARS, BTC, ETH, USDT).
- * La restricción única (usuario_id, activo) impide que tenga dos cuentas del mismo activo.
- */
+
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"usuario_id", "activo"}))
 public class Cuenta {
@@ -37,7 +33,6 @@ public class Cuenta {
     @Column(nullable = false)
     private Activo activo;
 
-    // BigDecimal y no double: double tiene errores de redondeo que con plata no se aceptan.
     // scale = 8 porque las cripto usan hasta 8 decimales.
     @Column(nullable = false, precision = 30, scale = 8)
     private BigDecimal saldo;

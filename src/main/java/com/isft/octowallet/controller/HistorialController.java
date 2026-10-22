@@ -9,7 +9,6 @@ import com.isft.octowallet.config.LoginInterceptor;
 import com.isft.octowallet.repository.MovimientoRepository;
 import com.isft.octowallet.service.UsuarioService;
 
-/** Historial / resumen de cuenta (RF07). */
 @Controller
 public class HistorialController {
 

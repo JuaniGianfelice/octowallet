@@ -13,18 +13,14 @@ import com.isft.octowallet.model.Usuario;
 import com.isft.octowallet.repository.CuentaRepository;
 import com.isft.octowallet.repository.UsuarioRepository;
 
-/** Registro y login de usuarios (RF01). */
 @Service
 public class UsuarioService {
 
-    // Dinero ficticio con el que arranca cada usuario nuevo. Cambialo si querés otro monto.
     private static final BigDecimal SALDO_INICIAL_ARS = new BigDecimal("1000000");
 
     private final UsuarioRepository usuarioRepository;
     private final CuentaRepository cuentaRepository;
 
-    // BCrypt: cifra la contraseña con un "salt" aleatorio. Mismo texto -> hash distinto cada vez,
-    // y no se puede revertir. Para validar se usa matches().
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // Inyección por constructor: Spring pasa los repositorios automáticamente.
@@ -33,10 +29,7 @@ public class UsuarioService {
         this.cuentaRepository = cuentaRepository;
     }
 
-    /**
-     * Crea el usuario y sus 4 cuentas (una por activo). ARS arranca con el saldo inicial, el resto en 0.
-     * @Transactional: si algo falla a mitad de camino, no queda un usuario sin cuentas.
-     */
+
     @Transactional
     public Usuario registrar(String username, String password, String alias) {
         if (username.isBlank() || password.isBlank() || alias.isBlank()) {

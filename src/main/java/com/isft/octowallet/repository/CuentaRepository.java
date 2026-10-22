@@ -11,9 +11,7 @@ import com.isft.octowallet.model.Usuario;
 
 public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
-    // Todas las cuentas de un usuario (para el menú principal).
     List<Cuenta> findByUsuarioOrderByActivo(Usuario usuario);
 
-    // La cuenta de un usuario para un activo puntual (para mover saldo).
     Optional<Cuenta> findByUsuarioAndActivo(Usuario usuario, Activo activo);
 }
